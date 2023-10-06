@@ -1,14 +1,27 @@
+
 // Test data, can be deleted in the future
-const data = [
-    {id:'1', title: "Title 1", author: "John", year: "2020", claim: "Claim 1", evidence: "Evidence 1" },
-    {id:'2', title: "Title 2", author: "Jane", year: "2021", claim: "Claim 2", evidence: "Evidence 2" }
-];
+// const data = [
+//     {id:'1', title: "Title 1", author: "John", year: "2020", claim: "Claim 1", evidence: "Evidence 1" },
+//     {id:'2', title: "Title 2", author: "Jane", year: "2021", claim: "Claim 2", evidence: "Evidence 2" }
+// ];
+const data=[]
 
 let bookmarks = JSON.parse(localStorage.getItem("bookmarkedSearches")) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    populateTable(data);
-    displayBookmarks(); 
+    
+    axios.get(URL+"/api/books").then(res=>{
+        res.data.map(item=>{
+            data.push({
+                ...item,
+                id:item._id
+            })
+        })
+        // console.log("data->",data)
+        populateTable(data);
+        displayBookmarks(); 
+    })
+    
 });
 
 function populateTable(data) {
@@ -23,20 +36,22 @@ function populateTable(data) {
             <td class="yearCol">${row.year}</td>
             <td class="claimCol">${row.claim}</td>
             <td class="evidenceCol">${row.evidence}</td>
-            <td class="detailsCol"><button onclick="location.href='detail.html?id=${row.id}'">Edit</button></td>
+            <td class="detailsCol"><button onclick="location.href='detail.html?id=${row._id}'">Edit</button></td>
         `;
         tbody.appendChild(tr);
     });
 }
 
 function filterSearch() {
-    const searchTerm = document.getElementById("searchBox").value.toLowerCase();
+    const searchTerm = document.getElementById("searchBox").value;
+    
     const filteredData = data.filter(row => {
-        return row.title.toLowerCase().includes(searchTerm) ||
-               row.author.toLowerCase().includes(searchTerm) ||
-               row.year.toLowerCase().includes(searchTerm) ||
-               row.claim.toLowerCase().includes(searchTerm) ||
-               row.evidence.toLowerCase().includes(searchTerm);
+        
+        return row.title.includes(searchTerm) ||
+               row.author.includes(searchTerm) ||
+               row.year.toString().includes(searchTerm) ||
+               row.claim.includes(searchTerm) ||
+               row.evidence.includes(searchTerm);
     });
     populateTable(filteredData);
 }
@@ -72,6 +87,7 @@ function displayBookmarks() {
         li.onclick = function() {
             document.getElementById('searchBox').value = searchTerm;
             filterSearch();
+            
         };
 
         li.appendChild(deleteButton);
@@ -86,7 +102,53 @@ function bookmarkCurrentSearch() {
         bookmarks.push(searchTerm);
         localStorage.setItem("bookmarkedSearches", JSON.stringify(bookmarks));
         displayBookmarks();
+        console.log("toSearch")
     }
+}
+function SearchBooks(){
+    const searchTerm = document.getElementById("searchBox").value;
+    if(!searchTerm){
+        populateTable(data);
+        return
+    };
+    const queryData={
+        // title:null,
+        // author:null,
+        // year:null,
+        // claim:null,
+        // evidence:null
+    }
+    data.filter(row => {
+        if(row.title == searchTerm){
+            queryData.title = searchTerm
+        }
+        else if(row.author == searchTerm){
+            queryData.author = searchTerm
+        }
+        else if(row.year == searchTerm){
+            queryData.year = Number(searchTerm)
+        }
+        else if(row.claim == searchTerm){
+            queryData.claim = searchTerm
+        }
+        else if(row.evidence == searchTerm){
+            queryData.evidence = searchTerm
+        }
+    });
+    console.log("myqury",queryData)
+    axios.get(URL+"/api/books/sea",{params:queryData})
+    .then(res=>{
+        console.log(res)
+        const mydata =[];
+        res.data.map(item=>{
+            mydata.push({
+                ...item,
+                id:item._id
+            })
+        })
+        populateTable(mydata);
+    })
+    
 }
 
 function deleteBookmark(index) {
