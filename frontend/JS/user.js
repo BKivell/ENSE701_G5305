@@ -48,6 +48,59 @@ function populateTable(data) {
         tbody.appendChild(tr);
     });
 }
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+document.addEventListener("DOMContentLoaded", () => {
+    
+    axios.get(URL+"/api/books").then(res=>{
+        res.data.map(item=>{
+            data.push({
+                ...item,
+                id:item._id
+            })
+        });
+        populateTable(data);
+        displayBookmarks(); 
+    });
+
+    document.getElementById('submitForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const formData = {
+            title: document.querySelector('input[name="title"]').value,
+            author: document.querySelector('input[name="author"]').value,
+            year: document.querySelector('input[name="year"]').value,
+            journal: document.querySelector('input[name="journal"]').value,
+            practice: document.querySelector('input[name="practice"]').value,
+            claim: document.querySelector('input[name="claim"]').value,
+            researchType: document.querySelector('input[name="researchType"]').value,
+            details: document.querySelector('textarea[name="details"]').value
+        };
+
+        axios.post(URL + "/api/books", formData)
+        .then(response => {
+            if (response.data && response.data.msg === 'Book added successfully') {
+                data.push({
+                    ...formData,
+                    id: response.data.id 
+                });
+                populateTable(data); 
+                closeSubmitForm();
+            } else {
+                alert("Error adding book: " + (response.data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error("There was an error submitting the form:", error);
+            alert("Error submitting form: " + error.message);
+        });
+    });    
+});
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 function filterSearch() {
     const searchTerm = document.getElementById("searchBox").value;
