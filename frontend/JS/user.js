@@ -22,6 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
         displayBookmarks(); 
     })
     
+    ////////////////////////////////////////////////////////////////
+    // Submission inside the modal
+    document.getElementById('submitForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        closeSubmitForm();
+    });
+//////////////////////////////////////////////////////////////// 
 });
 
 function populateTable(data) {
@@ -168,3 +175,14 @@ function sortTable(n) {
     
 }
 
+////////////////////////////////////////////////////////////////
+// Function to open the modal
+function openSubmitForm() {
+    document.getElementById('submitModal').style.display = "block";
+}
+
+// Function to close the modal
+function closeSubmitForm() {
+    document.getElementById('submitModal').style.display = "none";
+}
+////////////////////////////////////////////////////////////////
