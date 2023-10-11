@@ -45,7 +45,7 @@ export default function Home() {
   }, [showDuplicates]);
 
   return (
-    <div className={styles.container}>
+    <div>
       <Navbar />
       <h1 style={{ textAlign: 'center' }}>SPEED Moderator View</h1>
 
