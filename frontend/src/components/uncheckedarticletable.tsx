@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/articletable.module.css';
+import styles from '../styles/articletable.module.css'; // Reusing the same CSS for simplicity
 
 interface Article {
   id: number;
@@ -18,9 +18,8 @@ interface Props {
   articles: Article[];
 }
 
-const ArticleTable: React.FC<Props> = ({ articles }) => {
-  // Filter the articles to get only those which are checked and approved
-  const approvedArticles = articles.filter(article => article.checked && article.approved);
+const UncheckedArticlesTable: React.FC<Props> = ({ articles }) => {
+  const uncheckedOrUnapprovedArticles = articles.filter(article => !article.checked || !article.approved);
 
   return (
     <table className={styles.articleTable}>
@@ -38,7 +37,7 @@ const ArticleTable: React.FC<Props> = ({ articles }) => {
         </tr>
       </thead>
       <tbody>
-        {approvedArticles.map(article => (
+        {uncheckedOrUnapprovedArticles.map(article => (
           <tr key={article.id}>
             <td>{article.title}</td>
             <td>{article.author}</td>
@@ -56,4 +55,4 @@ const ArticleTable: React.FC<Props> = ({ articles }) => {
   );
 };
 
-export default ArticleTable;
+export default UncheckedArticlesTable;
