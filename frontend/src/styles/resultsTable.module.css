@@ -1,0 +1,48 @@
+/* styles/resultsTable.module.css */
+.container {
+    margin: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .header {
+    background-color: #0070f3;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .rowEven {
+    background-color: #f2f2f2;
+  }
+  
+  .rowOdd {
+    background-color: #e0e0e0;
+  }
+  
+  .column {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .detailsCol {
+    text-align: center;
+  }
+  
+  .editButton {
+    background-color: #0070f3;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .editButton:hover {
+    background-color: #0056b3;
+  }
+  
