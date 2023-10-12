@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from '../styles/articletable.module.css'; // Reusing the same CSS for simplicity
+import React from "react";
+import styles from "../styles/articletable.module.css"; // Reusing the same CSS for simplicity
 
 interface Article {
   id: number;
@@ -19,7 +19,9 @@ interface Props {
 }
 
 const UncheckedArticlesTable: React.FC<Props> = ({ articles }) => {
-  const uncheckedOrUnapprovedArticles = articles.filter(article => !article.checked || !article.approved);
+  const uncheckedOrUnapprovedArticles = articles.filter(
+    (article) => !article.checked
+  );
 
   return (
     <table className={styles.articleTable}>
@@ -37,7 +39,7 @@ const UncheckedArticlesTable: React.FC<Props> = ({ articles }) => {
         </tr>
       </thead>
       <tbody>
-        {uncheckedOrUnapprovedArticles.map(article => (
+        {uncheckedOrUnapprovedArticles.map((article) => (
           <tr key={article.id}>
             <td>{article.title}</td>
             <td>{article.author}</td>
@@ -46,8 +48,8 @@ const UncheckedArticlesTable: React.FC<Props> = ({ articles }) => {
             <td>{article.claim}</td>
             <td>{article.result_of_evidence}</td>
             <td>{article.type_of_research}</td>
-            <td>{article.approved ? 'Yes' : 'No'}</td>
-            <td>{article.checked ? 'Yes' : 'No'}</td>
+            <td>{article.approved ? "Yes" : "No"}</td>
+            <td>{article.checked ? "Yes" : "No"}</td>
           </tr>
         ))}
       </tbody>

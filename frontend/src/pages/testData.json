@@ -79,5 +79,22 @@
         "checked": false,
         "checkedAt": "2020-01-01",
         "updatedAt": "2020-01-01"
+    },
+    {
+        "id": 6,
+        "title": "title 2",
+        "author": "author 6",
+        "date": "2020-01-01",
+        "journal_name": "journal 6",
+        "se_practice": "se_practice 6",
+        "claim": "claim 6",
+        "result_of_evidence": "result_of_evidence 6",
+        "type_of_research": "type_of_research 6",
+        "type_of_participants": "type_of_participants 6",
+        "approved": false,
+        "checked": false,
+        "checkedAt": "2020-01-01",
+        "updatedAt": "2020-01-01"
+
     }
 ]
