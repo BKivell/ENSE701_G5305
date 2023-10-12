@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "../styles/articletable.module.css"; // Reusing the same CSS for simplicity
+import React from 'react';
+import styles from '../styles/articletable.module.css';
 
 interface Article {
   id: number;
@@ -16,40 +16,39 @@ interface Article {
 
 interface Props {
   articles: Article[];
+  visibleColumns: string[]; // Add this line
 }
 
-const UncheckedArticlesTable: React.FC<Props> = ({ articles }) => {
-  const uncheckedOrUnapprovedArticles = articles.filter(
-    (article) => !article.checked
-  );
+const UncheckedArticlesTable: React.FC<Props> = ({ articles, visibleColumns }) => {
+  const uncheckedArticles = articles.filter(article => !article.checked && !article.approved);
 
   return (
     <table className={styles.articleTable}>
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Date</th>
-          <th>SE Practice</th>
-          <th>Claim</th>
-          <th>Result of Evidence</th>
-          <th>Type of Research</th>
-          <th>Approved</th>
-          <th>Checked</th>
+          {visibleColumns.includes('title') && <th>Title</th>}
+          {visibleColumns.includes('author') && <th>Author</th>}
+          {visibleColumns.includes('date') && <th>Date</th>}
+          {visibleColumns.includes('se_practice') && <th>SE Practice</th>}
+          {visibleColumns.includes('claim') && <th>Claim</th>}
+          {visibleColumns.includes('result_of_evidence') && <th>Result of Evidence</th>}
+          {visibleColumns.includes('type_of_research') && <th>Type of Research</th>}
+          {visibleColumns.includes('approved') && <th>Approved</th>}
+          {visibleColumns.includes('checked') && <th>Checked</th>}
         </tr>
       </thead>
       <tbody>
-        {uncheckedOrUnapprovedArticles.map((article) => (
+        {uncheckedArticles.map(article => (
           <tr key={article.id}>
-            <td>{article.title}</td>
-            <td>{article.author}</td>
-            <td>{article.date}</td>
-            <td>{article.se_practice}</td>
-            <td>{article.claim}</td>
-            <td>{article.result_of_evidence}</td>
-            <td>{article.type_of_research}</td>
-            <td>{article.approved ? "Yes" : "No"}</td>
-            <td>{article.checked ? "Yes" : "No"}</td>
+            {visibleColumns.includes('title') && <td>{article.title}</td>}
+            {visibleColumns.includes('author') && <td>{article.author}</td>}
+            {visibleColumns.includes('date') && <td>{article.date}</td>}
+            {visibleColumns.includes('se_practice') && <td>{article.se_practice}</td>}
+            {visibleColumns.includes('claim') && <td>{article.claim}</td>}
+            {visibleColumns.includes('result_of_evidence') && <td>{article.result_of_evidence}</td>}
+            {visibleColumns.includes('type_of_research') && <td>{article.type_of_research}</td>}
+            {visibleColumns.includes('approved') && <td>{article.approved ? 'Yes' : 'No'}</td>}
+            {visibleColumns.includes('checked') && <td>{article.checked ? 'Yes' : 'No'}</td>}
           </tr>
         ))}
       </tbody>

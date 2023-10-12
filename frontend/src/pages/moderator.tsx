@@ -32,6 +32,18 @@ export default function Home() {
     "checked",
   ]);
 
+  const [visibleColumnsUnchecked, setVisibleColumnsUnchecked] = useState<string[]>([
+    "title",
+    "author",
+    "date",
+    "se_practice",
+    "claim",
+    "result_of_evidence",
+    "type_of_research",
+    "approved",
+    "checked",
+  ]);
+
   useEffect(() => {
     let filtered = testData;
 
@@ -75,6 +87,9 @@ export default function Home() {
 
       <SearchBar onSearch={setSearchTerm} />
       <ShowUncheckedCheckbox onChange={setShowUnchecked} />
+      
+
+      <h2 style={{ textAlign: "center" }}>Articles</h2>
       <ColumnVisibilityToggle
         columns={[
           "title",
@@ -90,8 +105,6 @@ export default function Home() {
         visibleColumns={visibleColumns}
         setVisibleColumns={setVisibleColumns}
       />
-
-      <h2 style={{ textAlign: "center" }}>Articles</h2>
       <div className={styles.tableContainer}>
         <ArticleTable
           articles={filteredArticles}
@@ -102,11 +115,30 @@ export default function Home() {
       <hr />
 
       <h2 style={{ textAlign: "center" }}>Unchecked Articles</h2>
+      
+      <ColumnVisibilityToggle
+        columns={[
+          "title",
+          "author",
+          "date",
+          "se_practice",
+          "claim",
+          "result_of_evidence",
+          "type_of_research",
+          "approved",
+          "checked",
+        ]}
+        visibleColumns={visibleColumnsUnchecked}
+        setVisibleColumns={setVisibleColumnsUnchecked}
+      />
       <FilterDuplicatesCheckbox
         showDuplicates={showDuplicates}
         setShowDuplicates={setShowDuplicates}
       />
-      <UncheckedArticlesTable articles={uncheckedArticles} />
+      <UncheckedArticlesTable 
+          articles={uncheckedArticles} 
+          visibleColumns={visibleColumnsUnchecked}
+      />
     </div>
   );
 }
