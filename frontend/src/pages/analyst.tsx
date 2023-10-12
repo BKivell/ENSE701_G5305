@@ -4,6 +4,7 @@ import Navbar from "../components/navbar";
 import testData from "./testData.json";
 import ArticleTable from "../components/articletable";
 import SearchBar from "../components/searchbar";
+import ColumnVisibilityToggle from "../components/columntoggle";
 
 import styles from "../styles/moderator.module.css";
 
@@ -15,6 +16,17 @@ export default function Home() {
     testData.filter((article) => !article.approved)
   );
   const [showDuplicates, setShowDuplicates] = useState(false);
+  const [visibleColumns, setVisibleColumns] = useState([
+    "title",
+    "author",
+    "date",
+    "se_practice",
+    "claim",
+    "result_of_evidence",
+    "type_of_research",
+    "approved",
+    "checked",
+  ]); // Adding a new state to manage the visible columns
 
   useEffect(() => {
     let filtered = testData;
@@ -54,14 +66,31 @@ export default function Home() {
     <div>
       <Navbar />
       <h1 style={{ textAlign: "center" }}>SPEED Analyst View</h1>
-
       <hr />
-
       <SearchBar onSearch={setSearchTerm} />
+      <ColumnVisibilityToggle
+        columns={[
+          "Title",
+          "Author",
+          "Date",
+          "SE Practice",
+          "Claim",
+          "Result of Evidence",
+          "Type of Research",
+          "Approved",
+          "Checked",
+        ]}
+        visibleColumns={visibleColumns}
+        setVisibleColumns={setVisibleColumns}
+      />
 
+      {/* Adding the new component to the UI */}
       <h2 style={{ textAlign: "center" }}>Moderated Articles</h2>
       <div className={styles.tableContainer}>
-        <ArticleTable articles={filteredArticles} />
+        <ArticleTable
+          articles={filteredArticles}
+          visibleColumns={visibleColumns}
+        />
       </div>
     </div>
   );
