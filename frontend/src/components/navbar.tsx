@@ -26,6 +26,12 @@ const Navbar = () => {
             <Link href="/login">Login / Sign Up</Link>
           </li>
           <li className={styles.navItem}>
+            <Link href="/moderator">Moderator</Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link href="/analyst">Analyst</Link>
+          </li>
+          <li className={styles.navItem}>
             <Link href="/operationalPreferences">Operational Preferences</Link>
           </li>
           <li className={styles.navItem}>
