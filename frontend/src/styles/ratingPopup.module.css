@@ -1,0 +1,60 @@
+/* styles/ratingPopup.module.css */
+
+.ratingPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent overlay to darken the background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    /* Ensure the popup appears above other content */
+
+}
+
+.popupContent {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+
+.input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button {
+    background: #007bff;
+    /* Blue button color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.button:hover {
+    background: #0056b3;
+    /* Darker blue on hover */
+}
+
+.ratingPopupTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+}

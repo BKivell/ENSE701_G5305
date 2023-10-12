@@ -1,4 +1,6 @@
+// components/adminEditWindow.tsx
 import React, { useState } from "react";
+import styles from "../styles/adminDashboard.module.css"; // Import your CSS file
 
 interface AdminEditWindowProps {
   onClose: () => void;
@@ -7,61 +9,115 @@ interface AdminEditWindowProps {
 
 interface Article {
   title: string;
-  content: string;
+  author: string;
+  year: number;
+  claim: string;
+  evidence: string;
+  grade: string;
 }
 
 const AdminEditWindow: React.FC<AdminEditWindowProps> = ({ article, onClose }) => {
-  const [showPopup, setShowPopup] = useState(false);
-  const [selectedGrade, setSelectedGrade] = useState("A"); // Default grade
+  const [editedArticle, setEditedArticle] = useState<Article>(article);
 
-  const handlePopupClose = () => {
-    setShowPopup(false);
-    onClose(); // Call the onClose function when the popup is closed
+  const handleFieldChange = (field: string, value: string | number) => {
+    setEditedArticle({ ...editedArticle, [field]: value });
   };
 
   const handlePopupSave = () => {
-    // Here, you can save the selected grade (selectedGrade) along with the article data.
-    // You can send an API request or perform any necessary action to save the data.
 
-    // For demonstration purposes, we'll log the selected grade to the console.
-    console.log("Selected Grade:", selectedGrade);
-
-    // Close the popup
-    handlePopupClose();
-  };
-
-  const handleGradeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedGrade(e.target.value);
+    onClose();
   };
 
   return (
-    <div>
-      <h2>{article.title}</h2>
-      <p>{article.content}</p>
-      <div className="popup">
-        <div className="popup-content">
-          <h3>Edit Article</h3>
-          <form>
-            <label htmlFor="title">Title:</label>
-            <input type="text" id="title" defaultValue={article.title} />
-            <label htmlFor="content">Content:</label>
-            <textarea id="content" defaultValue={article.content} />
-            <label htmlFor="grade">Grade:</label>
-            <select id="grade" value={selectedGrade} onChange={handleGradeChange}>
+<div className={styles.adminEditWindow}> {/* Apply the CSS class for the admin edit window */}
+      <div className={styles.modalContent}> {/* Apply the CSS class for the content */}
+        <span className={styles.closeButton} onClick={onClose}>
+          &times;
+        </span>
+        <h3 className={styles.windowTitle}>Edit Article</h3>
+        <form className="mt-6">
+          <div className="mb-6">
+            <label htmlFor="title" className="text-sm font-medium">Title:</label>
+            <input
+              type="text"
+              id="title"
+              className="border border-gray-300 rounded-md px-4 py-2 w-full text-lg font-semibold"
+              value={editedArticle.title}
+              onChange={(e) => handleFieldChange("title", e.target.value)}
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="author" className="text-sm font-medium">Author:</label>
+            <input
+              type="text"
+              id="author"
+              className="border border-gray-300 rounded-md px-4 py-2 w-full text-lg font-semibold"
+              value={editedArticle.author}
+              onChange={(e) => handleFieldChange("author", e.target.value)}
+            />
+          </div>
+          <div className="mb-12">
+            <label htmlFor="year" className="text-sm font-medium">Year:</label>
+            <input
+              type="number"
+              id="year"
+              className="border border-gray-300 rounded-md px-4 py-2 w-full text-lg font-semibold"
+              value={editedArticle.year}
+              onChange={(e) => handleFieldChange("year", Number(e.target.value))}
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="claim" className="text-sm font-medium">Claim:</label>
+            <input
+              type="text"
+              id="claim"
+              className="border border-gray-300 rounded-md px-4 py-2 w-full text-lg font-semibold"
+              value={editedArticle.claim}
+              onChange={(e) => handleFieldChange("claim", e.target.value)}
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="evidence" className="text-sm font-medium">Evidence:</label>
+            <input
+              type="text"
+              id="evidence"
+              className="border border-gray-300 rounded-md px-4 py-2 w-full text-lg font-semibold"
+              value={editedArticle.evidence}
+              onChange={(e) => handleFieldChange("evidence", e.target.value)}
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="grade" className="text-sm font-medium">Grade:</label>
+            <select
+              id="grade"
+              className="border border-gray-300 rounded-md px-4 py-2 w-full text-lg"
+              value={editedArticle.grade}
+              onChange={(e) => handleFieldChange("grade", e.target.value)}
+            >
               <option value="A">A</option>
               <option value="B">B</option>
               <option value="C">C</option>
               <option value="D">D</option>
               <option value="F">F</option>
             </select>
-            <button type="submit" onClick={handlePopupSave}>
-              Save
-            </button>
-            <button type="button" onClick={handlePopupClose}>
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={onClose}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md"
+            >
               Cancel
             </button>
-          </form>
-        </div>
+            <button
+              type="button"
+              onClick={handlePopupSave}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md"
+            >
+              Save
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

@@ -1,0 +1,21 @@
+/* styles/operationalPreferences.module.css */
+
+.preference-section {
+    margin-top: 20px;
+  }
+  
+  .preferences label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .notification-preferences,
+  .layout-preferences {
+    margin-top: 10px;
+  }
+  
+  .notification-preferences label,
+  .layout-preferences label {
+    margin-top: 0;
+  }
+  

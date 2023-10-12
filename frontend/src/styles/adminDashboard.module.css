@@ -1,0 +1,96 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-container {
+  background-color: #f7f7f7;
+  color: #333;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 80%; /* Adjust the width as needed */
+  max-width: 600px; /* Add a maximum width to limit the form's width */
+  margin: 0 auto; /* Center the form horizontally */
+}
+
+.form-group {
+  margin-bottom: 20px; /* Increased spacing between form groups */
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px; /* Increased font size for better readability */
+}
+
+.form-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px 20px; /* Larger padding for buttons */
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px; /* Increased font size for buttons */
+}
+
+.bypass-button {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.admin-dashboard {
+  background-color: #f0f0f0;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.article-form {
+  text-align: left;
+}
+
+.editButton {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 12px; /* Smaller padding for edit button */
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px; /* Smaller font size for edit button */
+}
+
+
+.adminEditWindow {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 1000;
+  width: 60%; /* Adjust the width as needed */
+  max-width: 800px; /* Add a maximum width to limit the window's width */
+}
+
+.modalContent {
+  text-align: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.windowTitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+}

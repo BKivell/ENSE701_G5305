@@ -1,45 +1,65 @@
-// components/ResultsTable.tsx
-import React, { useState } from 'react';
-import AdminEditWindow from './adminEditWindow'; // Import your edit window/modal component
-import styles from '../styles/resultsTable.module.css'; // Import your CSS file
+// components/resultsTable.tsx
+import React, { useState } from "react";
+import AdminEditWindow from './adminEditWindow';
+import styles from '../styles/resultsTable.module.css';
+import RatingPopup from './ratingPopup'; // Import the new RatingPopup component
 
 interface Article {
+  id: number;
   title: string;
-  content: string;
+  author: string;
+  year: number;
+  claim: string;
+  evidence: string;
+  grade: string; // Add a "Grade" property.
+  content?: string;
 }
 
 const ResultsTable = () => {
-  const [isEditWindowOpen, setIsEditWindowOpen] = useState(false); // State to control the visibility of the edit window
+  const [isEditWindowOpen, setIsEditWindowOpen] = useState(false);
+  const [isRatingPopupOpen, setIsRatingPopupOpen] = useState(false); // New state for the rating popup
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
-  const data = [
+  const data: Article[] = [
     {
-      _id: 1,
+      id: 1,
       title: 'Article 1',
       author: 'Author 1',
       year: 2023,
       claim: 'Claim 1',
       evidence: 'Evidence 1',
+      grade: 'A', // Initialize the grade (you can use 'A' as a default).
     },
     {
-      _id: 2,
+      id: 2,
       title: 'Article 2',
       author: 'Author 2',
       year: 2022,
       claim: 'Claim 2',
       evidence: 'Evidence 2',
+      grade: 'B',
     },
     // Add more data rows as needed
   ];
 
-  const handleEditClick = (articleId: number) => {
-    // Show the AdminEditWindow by setting isEditWindowOpen to true
+  const handleEditClick = (article: Article) => {
+    setSelectedArticle(article);
     setIsEditWindowOpen(true);
   };
 
-  // Placeholder Article with default values
+  const handleAddRatingClick = (article: Article) => {
+    setSelectedArticle(article);
+    setIsRatingPopupOpen(true); // Open the rating popup
+  };
+
   const placeholderArticle: Article = {
+    id: 0, // You should give a unique ID to the placeholder article.
     title: '',
-    content: '',
+    author: '',
+    year: 0,
+    claim: '',
+    evidence: '',
+    grade: 'A', // Set a default grade for the placeholder.
   };
 
   return (
@@ -52,19 +72,30 @@ const ResultsTable = () => {
             <th className={styles.header}>Year</th>
             <th className={styles.header}>Claim</th>
             <th className={styles.header}>Evidence</th>
+            <th className={styles.header}>Grade</th>
+            <th className={styles.header}>Add Rating</th>
             <th className={styles.header}>Details</th>
+            
           </tr>
         </thead>
         <tbody>
-          {data.map((row) => (
-            <tr key={row._id} className={row._id % 2 === 0 ? styles.rowEven : styles.rowOdd}>
-              <td className={styles.column}>{row.title}</td>
-              <td className={styles.column}>{row.author}</td>
-              <td className={styles.column}>{row.year}</td>
-              <td className={styles.column}>{row.claim}</td>
-              <td className={styles.column}>{row.evidence}</td>
+          {data.map((article, index) => (
+            <tr key={article.id} className={index % 2 === 0 ? styles.rowEven : styles.rowOdd}>
+              <td className={styles.column}>{article.title}</td>
+              <td className={styles.column}>{article.author}</td>
+              <td className={styles.column}>{article.year}</td>
+              <td className={styles.column}>{article.claim}</td>
+              <td className={styles.column}>{article.evidence}</td>
+              <td className={styles.column}>
+                {article.grade}
+              </td>
+              <td className={styles.column}>
+                <button onClick={() => handleAddRatingClick(article)} className={styles.editButton}>
+                  Add Rating
+                </button>
+              </td>
               <td className={styles.detailsCol}>
-                <button onClick={() => handleEditClick(row._id)} className={styles.editButton}>
+                <button onClick={() => handleEditClick(article)} className={styles.editButton}>
                   Edit
                 </button>
               </td>
@@ -72,7 +103,22 @@ const ResultsTable = () => {
           ))}
         </tbody>
       </table>
-      {isEditWindowOpen && <AdminEditWindow onClose={() => setIsEditWindowOpen(false)} article={placeholderArticle} />}
+      {isEditWindowOpen && (
+        <div className={styles.modalOverlay}>
+          <AdminEditWindow
+            onClose={() => setIsEditWindowOpen(false)}
+            article={selectedArticle || placeholderArticle}
+          />
+        </div>
+      )}
+      {isRatingPopupOpen && (
+        <div className={styles.modalOverlay}>
+          <RatingPopup
+            onClose={() => setIsRatingPopupOpen(false)}
+            article={selectedArticle || placeholderArticle}
+          />
+        </div>
+      )}
     </section>
   );
 };
