@@ -19,6 +19,13 @@ const ColumnVisibilityToggle: React.FC<Props> = ({
     }
   };
 
+  const formatColumnName = (name: string) => {
+    return name
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   return (
     <div>
       <h3>Show / Hide Columns</h3>
@@ -29,7 +36,7 @@ const ColumnVisibilityToggle: React.FC<Props> = ({
             checked={visibleColumns.includes(column)}
             onChange={() => toggleColumn(column)}
           />
-          {column}
+          {formatColumnName(column)}
         </label>
       ))}
     </div>
