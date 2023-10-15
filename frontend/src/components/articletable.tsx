@@ -12,6 +12,7 @@ interface Article {
   type_of_research: string;
   approved: boolean;
   checked: boolean;
+  details: string;
 }
 
 interface Props {
@@ -19,106 +20,68 @@ interface Props {
   visibleColumns: string[];
 }
 
-interface SortConfig {
-  key: keyof Article;
-  direction: "ascending" | "descending";
-}
-
 const ArticleTable: React.FC<Props> = ({ articles, visibleColumns }) => {
-  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [currentArticle, setCurrentArticle] = useState<Article | null>(null);
 
-  const sortedArticles = [
-    ...articles.filter((article) => article.checked && article.approved),
-  ];
-
-  if (sortConfig !== null) {
-    sortedArticles.sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === "ascending" ? -1 : 1;
-      }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === "ascending" ? 1 : -1;
-      }
-      return 0;
-    });
-  }
-
-  const requestSort = (key: keyof Article) => {
-    let direction: "ascending" | "descending" = "ascending";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "ascending"
-    ) {
-      direction = "descending";
-    }
-
-    setSortConfig({ key, direction });
+  const viewArticle = (article: Article) => {
+    setCurrentArticle(article);
+    setIsViewModalOpen(true);
   };
 
   return (
-    <table className={styles.articleTable}>
-      <thead>
-        <tr>
-          {visibleColumns.includes("title") && (
-            <th onClick={() => requestSort("title")}>Title</th>
-          )}
-          {visibleColumns.includes("author") && (
-            <th onClick={() => requestSort("author")}>Author</th>
-          )}
-          {visibleColumns.includes("date") && (
-            <th onClick={() => requestSort("date")}>Date</th>
-          )}
-          {visibleColumns.includes("se_practice") && (
-            <th onClick={() => requestSort("se_practice")}>SE Practice</th>
-          )}
-          {visibleColumns.includes("claim") && (
-            <th onClick={() => requestSort("claim")}>Claim</th>
-          )}
-          {visibleColumns.includes("result_of_evidence") && (
-            <th onClick={() => requestSort("result_of_evidence")}>
-              Result of Evidence
-            </th>
-          )}
-          {visibleColumns.includes("type_of_research") && (
-            <th onClick={() => requestSort("type_of_research")}>
-              Type of Research
-            </th>
-          )}
-          {visibleColumns.includes("approved") && (
-            <th onClick={() => requestSort("approved")}>Approved</th>
-          )}
-          {visibleColumns.includes("checked") && (
-            <th onClick={() => requestSort("checked")}>Checked</th>
-          )}
-        </tr>
-      </thead>
-      <tbody>
-        {sortedArticles.map((article) => (
-          <tr key={article.id}>
-            {visibleColumns.includes("title") && <td>{article.title}</td>}
-            {visibleColumns.includes("author") && <td>{article.author}</td>}
-            {visibleColumns.includes("date") && <td>{article.date}</td>}
-            {visibleColumns.includes("se_practice") && (
-              <td>{article.se_practice}</td>
-            )}
-            {visibleColumns.includes("claim") && <td>{article.claim}</td>}
-            {visibleColumns.includes("result_of_evidence") && (
-              <td>{article.result_of_evidence}</td>
-            )}
-            {visibleColumns.includes("type_of_research") && (
-              <td>{article.type_of_research}</td>
-            )}
-            {visibleColumns.includes("approved") && (
-              <td>{article.approved ? "Yes" : "No"}</td>
-            )}
-            {visibleColumns.includes("checked") && (
-              <td>{article.checked ? "Yes" : "No"}</td>
-            )}
+    <div>
+      {isViewModalOpen && currentArticle && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>{currentArticle.title}</h2>
+            <p><strong>Author:</strong> {currentArticle.author}</p>
+            <p><strong>Date:</strong> {currentArticle.date}</p>
+            <p><strong>SE Practice:</strong> {currentArticle.se_practice}</p>
+            <p><strong>Claim:</strong> {currentArticle.claim}</p>
+            <p><strong>Result of Evidence:</strong> {currentArticle.result_of_evidence}</p>
+            <p><strong>Type of Research:</strong> {currentArticle.type_of_research}</p>
+            <p><strong>Details:</strong> {currentArticle.details}</p>
+            <button onClick={() => setIsViewModalOpen(false)}>Close</button>
+          </div>
+        </div>
+      )}
+
+      <table className={styles.articleTable}>
+        <thead>
+          <tr>
+            {visibleColumns.includes("title") && <th>Title</th>}
+            {visibleColumns.includes("author") && <th>Author</th>}
+            {visibleColumns.includes("date") && <th>Date</th>}
+            {visibleColumns.includes("se_practice") && <th>SE Practice</th>}
+            {visibleColumns.includes("claim") && <th>Claim</th>}
+            {visibleColumns.includes("result_of_evidence") && <th>Result of Evidence</th>}
+            {visibleColumns.includes("type_of_research") && <th>Type of Research</th>}
+            {visibleColumns.includes("approved") && <th>Approved</th>}
+            {visibleColumns.includes("checked") && <th>Checked</th>}
+            <th>Details</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {articles.map(article => (
+            <tr key={article.id}>
+              {visibleColumns.includes("title") && <td>{article.title}</td>}
+              {visibleColumns.includes("author") && <td>{article.author}</td>}
+              {visibleColumns.includes("date") && <td>{article.date}</td>}
+              {visibleColumns.includes("se_practice") && <td>{article.se_practice}</td>}
+              {visibleColumns.includes("claim") && <td>{article.claim}</td>}
+              {visibleColumns.includes("result_of_evidence") && <td>{article.result_of_evidence}</td>}
+              {visibleColumns.includes("type_of_research") && <td>{article.type_of_research}</td>}
+              {visibleColumns.includes("approved") && <td>{article.approved ? "Yes" : "No"}</td>}
+              {visibleColumns.includes("checked") && <td>{article.checked ? "Yes" : "No"}</td>}
+              <td>
+                <button onClick={() => viewArticle(article)}>View</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

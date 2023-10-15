@@ -22,13 +22,13 @@ export default function Home() {
     "type_of_research",
     "approved",
     "checked",
-  ]); 
+  ]);
 
   useEffect(() => {
-    let filtered = testData;
+    let filtered = testData.filter(article => article.approved && article.checked);
 
     if (searchTerm) {
-      filtered = testData.filter(
+      filtered = filtered.filter(
         (article) =>
           article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           article.author.toLowerCase().includes(searchTerm.toLowerCase()) ||

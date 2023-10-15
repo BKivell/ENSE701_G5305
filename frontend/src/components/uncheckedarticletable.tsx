@@ -46,6 +46,7 @@ const UncheckedArticlesTable: React.FC<Props> = ({ articles, visibleColumns }) =
       {isModalOpen && currentArticle && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
+            <button onClick={() => setIsModalOpen(false)} className={styles.closeButton}>Close</button>
             <h3>Article Details</h3>
             <p><strong>Title:</strong> {currentArticle.title}</p>
             <p><strong>Author:</strong> {currentArticle.author}</p>
@@ -77,7 +78,7 @@ const UncheckedArticlesTable: React.FC<Props> = ({ articles, visibleColumns }) =
             {visibleColumns.includes('type_of_research') && <th>Type of Research</th>}
             {visibleColumns.includes('approved') && <th>Approved</th>}
             {visibleColumns.includes('checked') && <th>Checked</th>}
-            <th>Action</th>
+            <th>Check</th>
           </tr>
         </thead>
         <tbody>
