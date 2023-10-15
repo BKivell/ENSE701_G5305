@@ -1,4 +1,3 @@
-
 [
     {
         "id": 1,
@@ -14,7 +13,8 @@
         "approved": true,
         "checked": true,
         "checkedAt": "2020-01-01",
-        "updatedAt": "2020-01-01"
+        "updatedAt": "2020-01-01",
+        "details": "Article explores SE Practice 1, validates claim 1 with evidence 1, published in Journal 1."
     },
     {
         "id": 2,
@@ -30,11 +30,12 @@
         "approved": true,
         "checked": true,
         "checkedAt": "2020-01-01",
-        "updatedAt": "2020-01-01"
+        "updatedAt": "2020-01-01",
+        "details": "Investigation of SE Practice 2, supporting claim 2 with evidence 2, featured in Journal 2."
     },
     {
         "id": 3,
-        "title": "title 2",
+        "title": "title 3",
         "author": "author 3",
         "date": "2020-01-01",
         "journal_name": "journal 3",
@@ -46,7 +47,8 @@
         "approved": false,
         "checked": true,
         "checkedAt": "2020-01-01",
-        "updatedAt": "2020-01-01"
+        "updatedAt": "2020-01-01",
+        "details": "Study on SE Practice 3, examines claim 3, evidence 3 presented, in Journal 3."
     },
     {
         "id": 4,
@@ -62,7 +64,8 @@
         "approved": false,
         "checked": false,
         "checkedAt": "2020-01-01",
-        "updatedAt": "2020-01-01"
+        "updatedAt": "2020-01-01",
+        "details": "Analysis of SE Practice 4, evaluates claim 4 with evidence 4, published in Journal 4."
     },
     {
         "id": 5,
@@ -78,11 +81,12 @@
         "approved": false,
         "checked": false,
         "checkedAt": "2020-01-01",
-        "updatedAt": "2020-01-01"
+        "updatedAt": "2020-01-01",
+        "details": "Research on SE Practice 5, confirms claim 5 using evidence 5, found in Journal 5."
     },
     {
         "id": 6,
-        "title": "title 2",
+        "title": "title 6",
         "author": "author 6",
         "date": "2020-01-01",
         "journal_name": "journal 6",
@@ -94,7 +98,7 @@
         "approved": false,
         "checked": false,
         "checkedAt": "2020-01-01",
-        "updatedAt": "2020-01-01"
-
+        "updatedAt": "2020-01-01",
+        "details": "Examination of SE Practice 6, validates claim 6 with evidence 6, in Journal 6."
     }
 ]
