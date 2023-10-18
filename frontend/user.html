@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/user.css">
+    <title>User Page</title>
+</head>
+<body>
+     <!-- SPEED Header -->
+     <div class="logo-header">  
+        <span>SPEED</span>
+    </div>
+    
+    <!-- ////////////////////////////////////////////////////////////////-->   
+    <!-- Submit Section -->
+    <div class="submit-section">
+        <span class="submit-text">Submit an Article</span> 
+        <button onclick="openSubmitForm()">Submit</button>
+    </div>
+    
+    <!-- The Modal -->
+    <div id="submitModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeSubmitForm()">&times;</span>
+            <form id="submitForm">
+                <input type="text" placeholder="Title" name="title" required>
+                <input type="text" placeholder="Authors" name="author" required>
+                <input type="number" placeholder="Year of Publication" name="year" required>
+                <input type="text" placeholder="Journal/Conference Name" name="journal" required>
+                <input type="text" placeholder="SE Practice" name="practice" required>
+                <input type="text" placeholder="Claim" name="claim" required>
+                <input type="text" placeholder="Type of Research" name="researchType" required>
+                <textarea placeholder="Details" name="details" required></textarea>
+                <button type="submit">Submit Article</button>
+            </form>
+        </div>
+    </div>
+    <!-- ////////////////////////////////////////////////////////////////--> 
+
+    <div class="container">
+        <input type="text" id="searchBox" placeholder="Search..." onkeyup="filterSearch()">
+        
+         <!-- Search button -->
+         <button onclick="SearchBooks()">Search</button>
+         <div id="bookmarks">
+             <h3>Bookmarked Searches:</h3>
+             <ul id="bookmarkList"></ul>
+
+        <!-- Bookmark button -->
+        <button onclick="bookmarkCurrentSearch()">Bookmark Current Search</button>     
+            <!-- Clear All Bookmarks button -->
+            <button onclick="clearAllBookmarks()">Clear All Bookmarks</button>
+        </div>
+        
+        <div id="columnToggleControls">
+            <label><input type="checkbox" checked onclick="toggleColumn('titleCol')"> Title</label>
+            <label><input type="checkbox" checked onclick="toggleColumn('authorCol')"> Author</label>
+            <label><input type="checkbox" checked onclick="toggleColumn('yearCol')"> Publication Year</label>
+            <label><input type="checkbox" checked onclick="toggleColumn('claimCol')"> Claim</label>
+            <label><input type="checkbox" checked onclick="toggleColumn('evidenceCol')"> Evidence Result</label>
+        </div>
+        
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th class="titleCol" onclick="sortTable(0)">Title</th>
+                    <th class="authorCol" onclick="sortTable(1)">Author</th>
+                    <th class="yearCol" onclick="sortTable(2)">Publication Year</th>
+                    <th class="claimCol" onclick="sortTable(3)">Claim</th>
+                    <th class="evidenceCol" onclick="sortTable(4)">Evidence Result</th>
+                    <th class="detailsCol" onclick="sortTable(5)">Article Details</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <script src="./JS/axios.min.js"></script>
+    <script src="./JS/config.js"></script>
+    <script  src="./JS/user.js"></script>
+</body>
+</html>
