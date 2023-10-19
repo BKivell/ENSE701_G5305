@@ -9,7 +9,8 @@ const data=[]
 let bookmarks = JSON.parse(localStorage.getItem("bookmarkedSearches")) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+    console.log("attempting to get api/books")
+    console.log(URL+"/api/books")
     axios.get(URL+"/api/books").then(res=>{
         res.data.map(item=>{
             data.push({
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id:item._id
             })
         })
-        // console.log("data->",data)
+        console.log("data->",data)
         populateTable(data);
         displayBookmarks(); 
     })

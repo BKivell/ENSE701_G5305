@@ -1,4 +1,5 @@
 // components/resultsTable.tsx
+/*
 import React, { useState } from "react";
 import AdminEditWindow from './adminEditWindow';
 import styles from '../styles/resultsTable.module.css';
@@ -8,11 +9,15 @@ interface Article {
   id: number;
   title: string;
   author: string;
-  year: number;
+  date: string;
+  se_practice: string;
   claim: string;
-  evidence: string;
+  result_of_evidence: string;
+  type_of_research: string;
+  approved: boolean;
+  checked: boolean;
+  details: string;
   grade: string; // Add a "Grade" property.
-  content?: string;
 }
 
 const ResultsTable = () => {
@@ -25,7 +30,7 @@ const ResultsTable = () => {
       id: 1,
       title: 'Article 1',
       author: 'Author 1',
-      year: 2023,
+      date: '2023',
       claim: 'Claim 1',
       evidence: 'Evidence 1',
       grade: 'A', // Initialize the grade (you can use 'A' as a default).
@@ -123,4 +128,4 @@ const ResultsTable = () => {
   );
 };
 
-export default ResultsTable;
+export default ResultsTable;*/
