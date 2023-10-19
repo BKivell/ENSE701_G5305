@@ -1,46 +1,47 @@
-// routes/api.js
 const express = require('express');
 const router = express.Router();
+const Article = require('../models/article');
 const auth = require('../middleware/auth');
 
-// @route   GET api/search
-// @desc    Search for data
+// @route   GET api/articles
+// @desc    Search for articles
 // @access  Public
-router.get('/search', (req, res) => {
+router.get('/articles', async (req, res) => {
   try {
-    const searchTerm = req.query.search; // Get the search query from the request query parameters
+    const searchTerm = req.query.search;
 
-    YourModel.find({ title: { $regex: searchTerm, $options: 'i' } }, (err, searchResults) => {
-      if (err) {
-        console.error(err.message);
-        return res.status(500).send('Server Error');
-      }
-      res.json(searchResults);
+    // Use Mongoose to search for articles in your model
+    const searchResults = await Article.find({
+      title: { $regex: searchTerm, $options: 'i' },
     });
+
+    res.json(searchResults);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-const DummyModel = require('../models/DummyModel');
-
-// Define the POST route for adding dummy data
-router.post('/add-dummy-data', async (req, res) => {
+// @route   POST api/articles
+// @desc    Add an article
+// @access  Public
+router.post('/articles', async (req, res) => {
   try {
-    // Create a new dummy data object based on your schema
-    const newDummyData = new DummyModel({
-      title: 'Dummy Title',
-      author: 'Dummy Author',
-      year: 2023,
-      claim: 'Dummy Claim',
-      evidence: 'Dummy Evidence',
+    const { title, author, year, claim, evidence } = req.body;
+
+    // Create a new article object based on your model
+    const newArticle = new Article({
+      title,
+      author,
+      year,
+      claim,
+      evidence,
     });
 
-    // Save the new dummy data to the database
-    await newDummyData.save();
+    // Save the new article to the database
+    await newArticle.save();
 
-    res.status(201).json({ message: 'Dummy data added successfully' });
+    res.status(201).json({ message: 'Article added successfully' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, SetStateAction } from "react";
 import Navbar from "../components/navbar";
-import testData from "./testData.json";
 import ArticleTable from "../components/articletable";
 import SearchBar from "../components/searchbar";
 import ShowUncheckedCheckbox from "../components/showunchecked";
@@ -11,16 +9,34 @@ import ColumnVisibilityToggle from "../components/columntoggle";
 
 import styles from "../styles/moderator.module.css";
 
+// Define the type or interface for your articles
+interface Article {
+  id: number;
+  title: string;
+  author: string;
+  date: string;
+  se_practice: string;
+  claim: string;
+  result_of_evidence: string;
+  type_of_research: string;
+  approved: boolean;
+  checked: boolean;
+  details: string;
+  grade: string;
+}
+
+
+
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showUnchecked, setShowUnchecked] = useState(false);
-  const [filteredArticles, setFilteredArticles] = useState(testData);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [uncheckedArticles, setUncheckedArticles] = useState(
-    testData.filter((article) => !article.approved)
+    articles.filter((article) => !article.approved)
   );
   const [showDuplicates, setShowDuplicates] = useState(false);
-
-  const [visibleColumns, setVisibleColumns] = useState<string[]>([
+  const [visibleColumns, setVisibleColumns] = useState([
     "title",
     "author",
     "date",
@@ -30,27 +46,47 @@ export default function Home() {
     "type_of_research",
     "approved",
     "checked",
+    "grade",
   ]);
 
-  const [visibleColumnsUnchecked, setVisibleColumnsUnchecked] = useState<string[]>([
-    "title",
-    "author",
-    "date",
-    "se_practice",
-    "claim",
-    "result_of_evidence",
-    "type_of_research",
-    "approved",
-    "checked",
-  ]);
+
+
+  const dotenv = require("dotenv")
+  dotenv.config()
+  
+  const backendURL = process.env.NEXT_PUBLIC_BACKENDURL;
+  
+  useEffect(() => {
+    // Fetch articles from your API endpoint
+    fetchArticlesFromServer();
+  }, []); // Empty dependency array ensures this effect runs once on component mount
+  
+  const fetchArticlesFromServer = async () => {
+    try {
+      // Make an HTTP GET request to your API endpoint that returns the articles
+      const response = await fetch(`${backendURL}/api/articles`);
+      console.log(response)
+      if (response.ok) {
+        const data = await response.json();
+        setArticles(data);
+      } else {
+        console.error('Failed to fetch articles');
+      }
+    } catch (error) {
+      console.error('Error fetching articles:', error);
+    }
+  
+    console.log(articles)
+  };
+
 
   useEffect(() => {
-    let filtered = testData;
+    let filtered = articles;
 
     if (showUnchecked) {
-      filtered = testData.filter((article) => !article.checked);
+      filtered = articles.filter((article) => !article.checked);
     } else if (searchTerm) {
-      filtered = testData.filter(
+      filtered = articles.filter(
         (article) =>
           article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           article.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -62,11 +98,11 @@ export default function Home() {
   }, [searchTerm, showUnchecked]);
 
   useEffect(() => {
-    let unchecked = testData.filter((article) => !article.approved);
+    let unchecked = articles.filter((article) => !article.approved);
 
     if (showDuplicates) {
       const approvedTitles = new Set(
-        testData
+        articles
           .filter((article) => article.approved)
           .map((article) => article.title.toLowerCase())
       );
@@ -128,8 +164,9 @@ export default function Home() {
           "approved",
           "checked",
         ]}
-        visibleColumns={visibleColumnsUnchecked}
-        setVisibleColumns={setVisibleColumnsUnchecked}
+        visibleColumns={visibleColumns} setVisibleColumns={function (value: SetStateAction<string[]>): void {
+          throw new Error("Function not implemented.");
+        } }        //setVisibleColumns={setVisibleColumnsUnchecked}
       />
       <FilterDuplicatesCheckbox
         showDuplicates={showDuplicates}
@@ -137,7 +174,7 @@ export default function Home() {
       />
       <UncheckedArticlesTable 
           articles={uncheckedArticles} 
-          visibleColumns={visibleColumnsUnchecked}
+          visibleColumns={visibleColumns}
       />
     </div>
   );

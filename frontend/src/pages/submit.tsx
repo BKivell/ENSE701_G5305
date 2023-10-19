@@ -1,48 +1,122 @@
-import React from 'react';
-import Link from 'next/link'; // Import Link for navigation
+import React, { useState } from 'react';
 import Navbar from '@/components/navbar';
+import axios from 'axios';
 
 const Submit = () => {
+  const [formData, setFormData] = useState({
+    title: '',
+    author: '',
+    date: '',
+    se_practice: '',
+    claim: '',
+    result_of_evidence: '',
+    type_of_research: '',
+    approved: false,
+    checked: false,
+    details: '',
+    grade: '',
+  });
 
-    const submitData = () => {
-        // Submits data to database from form below
-        document.getElementById('submitForm') as HTMLFormElement;
+  const dotenv = require("dotenv");
+  dotenv.config();
 
-        const formData = {
-            title: (document.querySelector('input[name="title"]') as HTMLInputElement)?.value,
-            author: (document.querySelector('input[name="author"]') as HTMLInputElement)?.value,
-            year: (document.querySelector('input[name="year"]') as HTMLInputElement)?.value,
-            journal: (document.querySelector('input[name="journal"]') as HTMLInputElement)?.value,
-            practice: (document.querySelector('input[name="practice"]') as HTMLInputElement)?.value,
-            claim: (document.querySelector('input[name="claim"]') as HTMLInputElement)?.value,
-            researchType: (document.querySelector('input[name="researchType"]') as HTMLInputElement)?.value,
-            details: (document.querySelector('textarea[name="details"]') as HTMLTextAreaElement)?.value,
-        };
+  const backendURL = process.env.NEXT_PUBLIC_BACKENDURL;
 
-        console.log("Submitted data: ", formData);
-    };
+  const submitData = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault(); // Prevent the default form submission behavior
 
-    return (
-        <div id="submitModal" className="">
-            <Navbar />
-            <div className="modal-content">
-                <form id="submitForm">
-                    <input type="text" placeholder="Title" name="title" required />
-                    <input type="text" placeholder="Authors" name="author" required />
-                    <input type="number" placeholder="Year of Publication" name="year" required />
-                    <input type="text" placeholder="Journal/Conference Name" name="journal" required />
-                    <input type="text" placeholder="SE Practice" name="practice" required />
-                    <input type="text" placeholder="Claim" name="claim" required />
-                    <input type="text" placeholder="Type of Research" name="researchType" required />
-                    <textarea placeholder="Details" name="details" required></textarea>
-                    <button onClick={submitData}>
-                        Submit Article
-                    </button>
-                </form>
-            </div>
-        </div>
+    try {
+      // Make a POST request to API endpoint
+      const response = await axios.post(`${backendURL}/api/submit`, formData);
 
-    );
+      console.log(response.data);
+
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      // Handle the error or show an error message
+    }
+  };
+
+  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  return (
+    <div id="submitModal" className="">
+      <Navbar />
+      <div className="modal-content">
+        <form id="submitForm">
+          <input
+            type="text"
+            placeholder="Title"
+            name="title"
+            value={formData.title}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Authors"
+            name="author"
+            value={formData.author}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Date"
+            name="date"
+            value={formData.date}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            placeholder="SE Practice"
+            name="se_practice"
+            value={formData.se_practice}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Claim"
+            name="claim"
+            value={formData.claim}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Result of Evidence"
+            name="result_of_evidence"
+            value={formData.result_of_evidence}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Type of Research"
+            name="type_of_research"
+            value={formData.type_of_research}
+            onChange={handleInputChange}
+            required
+          />
+          <textarea
+            placeholder="Details"
+            name="details"
+            value={formData.details}
+            onChange={handleInputChange}
+            required
+          ></textarea>
+          <button onClick={submitData}>Submit Article</button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default Submit;

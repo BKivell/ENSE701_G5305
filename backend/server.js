@@ -16,8 +16,10 @@ app.use(cors());
 
 // Define Routes
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/data', require('./routes/api'));
+//app.use('/api/data', require('./routes/api'));
 app.use('/api/books', require('./routes/api/books'));
+app.use('/api/submit', require('./routes/api/submit'));
+app.use('/api/articles', require('./routes/api/articles'));
 
 const PORT = process.env.PORT || 5000;
 

@@ -6,15 +6,14 @@ interface Article {
   title: string;
   author: string;
   date: string;
-  journal_name: string;
   se_practice: string;
   claim: string;
   result_of_evidence: string;
   type_of_research: string;
-  type_of_participants: string;
   approved: boolean;
   checked: boolean;
-  details: string;
+  details: string; // Add the missing 'details' property
+  grade: string;
 }
 
 interface Props {
@@ -51,12 +50,10 @@ const UncheckedArticlesTable: React.FC<Props> = ({ articles, visibleColumns }) =
             <p><strong>Title:</strong> {currentArticle.title}</p>
             <p><strong>Author:</strong> {currentArticle.author}</p>
             <p><strong>Date:</strong> {currentArticle.date}</p>
-            <p><strong>Journal Name:</strong> {currentArticle.journal_name}</p>
             <p><strong>SE Practice:</strong> {currentArticle.se_practice}</p>
             <p><strong>Claim:</strong> {currentArticle.claim}</p>
             <p><strong>Result of Evidence:</strong> {currentArticle.result_of_evidence}</p>
             <p><strong>Type of Research:</strong> {currentArticle.type_of_research}</p>
-            <p><strong>Type of Participants:</strong> {currentArticle.type_of_participants}</p>
             <p><strong>Details:</strong> {currentArticle.details}</p>
 
             <p>Do you want to approve this article?</p>
