@@ -18,7 +18,7 @@ const FilterDuplicatesCheckbox: React.FC<Props> = ({ showDuplicates, setShowDupl
         checked={showDuplicates}
         onChange={handleCheckboxChange}
       />
-      <label htmlFor="filterDuplicates">Show Possible Duplicates</label>
+      <label htmlFor="filterDuplicates">Hide Possible Duplicates</label>
     </div>
   );
 };

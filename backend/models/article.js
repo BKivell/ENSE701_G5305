@@ -1,8 +1,13 @@
 // models/article.js
 const mongoose = require('mongoose');
 
+
 // Define the Article schema
 const articleSchema = new mongoose.Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,

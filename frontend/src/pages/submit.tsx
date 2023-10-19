@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const Submit = () => {
   const [formData, setFormData] = useState({
+    id: '',
     title: '',
     author: '',
     date: '',
@@ -22,11 +23,26 @@ const Submit = () => {
 
   const backendURL = process.env.NEXT_PUBLIC_BACKENDURL;
 
+  function generateUniqueID() {
+    // Generate a timestamp
+    const timestamp = new Date().getTime();
+  
+    // Generate a random number
+    const random = Math.floor(Math.random() * 1000);
+  
+    // Combine the timestamp and random number to create a unique ID
+    const uniqueID = `${timestamp}${random}`;
+  
+    return uniqueID;
+  }
+
   const submitData = async (e: { preventDefault: () => void; }) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
     try {
       // Make a POST request to API endpoint
+      formData.id = generateUniqueID();
+      console.log(formData);
       const response = await axios.post(`${backendURL}/api/submit`, formData);
 
       console.log(response.data);

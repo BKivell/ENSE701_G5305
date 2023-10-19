@@ -33,8 +33,6 @@ export default function Home() {
     "claim",
     "result_of_evidence",
     "type_of_research",
-    "approved",
-    "checked",
     "grade",
   ]);
 
@@ -82,11 +80,10 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      <h1 style={{ textAlign: "center" }}>SPEED Analyst View</h1>
+      <h1 style={{ textAlign: "center" }}>SPEED Database</h1>
       <hr />
       <SearchBar onSearch={setSearchTerm} />
 
-      <h2 style={{ textAlign: "center" }}>Moderated Articles</h2>
       <ColumnVisibilityToggle
         columns={[
           "title",
@@ -96,8 +93,6 @@ export default function Home() {
           "claim",
           "result_of_evidence",
           "type_of_research",
-          "approved",
-          "checked",
           "grade",
         ]}
         visibleColumns={visibleColumns}
@@ -110,7 +105,7 @@ export default function Home() {
 
       <div className={styles.tableContainer}>
         {articles.length === 0 ? (
-          <p>No approved articles</p>
+          <p>No articles to display</p>
         ) : (
           <p></p>
         )}

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const articleModel = require('../../models/article');
 
+
 // @route GET api/submit/test
 // @description Tests submit route
 // @access Public
@@ -14,17 +15,6 @@ router.post('/', (req, res) => {
   articleModel.create(req.body)
     .then(article => res.json({ msg: 'Article added successfully' }))
     .catch(err => res.status(400).json({ error: 'Unable to add this article' }));
-});
-
-// @route PUT api/submit/:id
-// @description Update an article
-// @access Public
-router.put('/:id', (req, res) => {
-  articleModel.findByIdAndUpdate(req.params.id, req.body)
-    .then(article => res.json({ msg: 'Article updated successfully' }))
-    .catch(err =>
-      res.status(400).json({ error: 'Unable to update the article' })
-    );
 });
 
 // @route DELETE api/submit/:id
