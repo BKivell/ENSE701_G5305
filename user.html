@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/user.css">
+    <link rel="stylesheet" href="CSS/user.css">
     <title>User Page</title>
 </head>
 <body>
@@ -59,6 +59,9 @@
             <label><input type="checkbox" checked onclick="toggleColumn('yearCol')"> Publication Year</label>
             <label><input type="checkbox" checked onclick="toggleColumn('claimCol')"> Claim</label>
             <label><input type="checkbox" checked onclick="toggleColumn('evidenceCol')"> Evidence Result</label>
+           
+
+            
         </div>
         
         <table id="resultsTable">
@@ -69,15 +72,18 @@
                     <th class="yearCol" onclick="sortTable(2)">Publication Year</th>
                     <th class="claimCol" onclick="sortTable(3)">Claim</th>
                     <th class="evidenceCol" onclick="sortTable(4)">Evidence Result</th>
-                    <th class="detailsCol" onclick="sortTable(5)">Article Details</th>
+                    <th class="approval" onclick="sortTable(5)">Approval</th>
+                    <th class="detail" onclick="sortTable(6)">details</th>
+                    </td>
                 </tr>
             </thead>
             <tbody>
             </tbody>
         </table>
     </div>
-    <script src="../JS/axios.min.js"></script>
-    <script src="../JS/config.js"></script>
-    <script  src="../JS/user.js"></script>
+    <script src="./JS/axios.min.js"></script>
+    <script src="./JS/config.js"></script>
+    <script  src="./JS/user.js"></script>
+    
 </body>
 </html>

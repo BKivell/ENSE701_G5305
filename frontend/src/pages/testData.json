@@ -14,7 +14,8 @@
         "checked": true,
         "checkedAt": "2020-01-01",
         "updatedAt": "2020-01-01",
-        "details": "Article explores SE Practice 1, validates claim 1 with evidence 1, published in Journal 1."
+        "details": "Article explores SE Practice 1, validates claim 1 with evidence 1, published in Journal 1.",
+        "grade": "A"
     },
     {
         "id": 2,
@@ -31,7 +32,8 @@
         "checked": true,
         "checkedAt": "2020-01-01",
         "updatedAt": "2020-01-01",
-        "details": "Investigation of SE Practice 2, supporting claim 2 with evidence 2, featured in Journal 2."
+        "details": "Investigation of SE Practice 2, supporting claim 2 with evidence 2, featured in Journal 2.",
+        "grade": "A"
     },
     {
         "id": 3,
@@ -48,7 +50,8 @@
         "checked": true,
         "checkedAt": "2020-01-01",
         "updatedAt": "2020-01-01",
-        "details": "Study on SE Practice 3, examines claim 3, evidence 3 presented, in Journal 3."
+        "details": "Study on SE Practice 3, examines claim 3, evidence 3 presented, in Journal 3.",
+        "grade": "A"
     },
     {
         "id": 4,
@@ -65,7 +68,8 @@
         "checked": false,
         "checkedAt": "2020-01-01",
         "updatedAt": "2020-01-01",
-        "details": "Analysis of SE Practice 4, evaluates claim 4 with evidence 4, published in Journal 4."
+        "details": "Analysis of SE Practice 4, evaluates claim 4 with evidence 4, published in Journal 4.",
+        "grade": "A"
     },
     {
         "id": 5,
@@ -82,7 +86,8 @@
         "checked": false,
         "checkedAt": "2020-01-01",
         "updatedAt": "2020-01-01",
-        "details": "Research on SE Practice 5, confirms claim 5 using evidence 5, found in Journal 5."
+        "details": "Research on SE Practice 5, confirms claim 5 using evidence 5, found in Journal 5.",
+        "grade": "A"
     },
     {
         "id": 6,
@@ -99,6 +104,7 @@
         "checked": false,
         "checkedAt": "2020-01-01",
         "updatedAt": "2020-01-01",
-        "details": "Examination of SE Practice 6, validates claim 6 with evidence 6, in Journal 6."
+        "details": "Examination of SE Practice 6, validates claim 6 with evidence 6, in Journal 6.",
+        "grade": "A"
     }
 ]

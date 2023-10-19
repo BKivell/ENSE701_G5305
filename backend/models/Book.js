@@ -1,4 +1,5 @@
 // models/Book.js
+// will need to convert to match articles
 
 const mongoose = require('mongoose');
  //title: "Title 1", author: "John", year: "2020", claim: "Claim 1", evidence: "Evidence 1" 

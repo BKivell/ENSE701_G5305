@@ -1,8 +1,7 @@
 // components/navbar.tsx
 import Link from 'next/link';
 import styles from '../styles/navbar.module.css';
-import axios from 'axios';
-import { Route } from 'next';
+
 
 const Navbar = () => {
 
@@ -34,7 +33,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-/*
-<Route path="/react-page" component={MyReactComponent} /> (for React to HTML)
-<a href="/traditional-html-page.html">Go to HTML Page</a> (and for HTML to React)*/

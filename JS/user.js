@@ -43,6 +43,7 @@ function populateTable(data) {
             <td class="yearCol">${row.year}</td>
             <td class="claimCol">${row.claim}</td>
             <td class="evidenceCol">${row.evidence}</td>
+            <td class="approval">${row.isApproved}</td>
             <td class="detailsCol"><button onclick="location.href='detail.html?id=${row._id}'">Edit</button></td>
         `;
         tbody.appendChild(tr);
@@ -239,3 +240,26 @@ function closeSubmitForm() {
     document.getElementById('submitModal').style.display = "none";
 }
 ////////////////////////////////////////////////////////////////
+
+function updateApproval(checkbox) {
+    const id = checkbox.getAttribute("data-id"); 
+    const isApproved = checkbox.checked; 
+
+
+    axios.post(URL + "/api/books/approval", { id, isApproved })
+        .then(response => {
+            if (response.data && response.data.msg === 'Approval updated successfully') {
+             
+                console.log("Approval updated successfully");
+            } else {
+               
+                console.log("Error updating approval: " + (response.data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+         
+            console.error("Request failed:", error);
+            alert("Error updating approval: " + error.message);
+        });
+}
+

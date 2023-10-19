@@ -21,6 +21,7 @@ export default function Home() {
     "type_of_research",
     "approved",
     "checked",
+    "grade",
   ]);
 
   useEffect(() => {
@@ -58,6 +59,7 @@ export default function Home() {
           "type_of_research",
           "approved",
           "checked",
+          "grade"
         ]}
         visibleColumns={visibleColumns}
         setVisibleColumns={setVisibleColumns}
