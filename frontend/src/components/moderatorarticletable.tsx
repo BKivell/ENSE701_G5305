@@ -27,7 +27,7 @@ const ModeratorArticleTable: React.FC<Props> = ({ articles, visibleColumns }) =>
   const [currentArticle, setCurrentArticle] = useState<Article | null>(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
-  const uncheckedArticles = articles.filter(article => !article.checked && !article.approved);
+  const uncheckedArticles = articles;
 
   const dotenv = require("dotenv")
   dotenv.config()
@@ -43,16 +43,18 @@ const ModeratorArticleTable: React.FC<Props> = ({ articles, visibleColumns }) =>
     setIsViewModalOpen(true);
   };
 
-  const approveArticle = async () => {
-    if (currentArticle) {
-      try {
+
+  // CURRENTLY NOT WORKING CORRECTLY
+  // Try to get information and submit new article then remove the old one?
+  const approveArticle = async (articleId: string) => { 
+
+    try {
+      if (articleId) {
         // Make an API request to update the article's approval status
-        const response = await fetch(`${backendURL}/api/articles/${currentArticle.id}`, {
+        const response = await fetch(`${backendURL}/api/articles/approve/${articleId}`, {
           method: 'PUT',
         });
-
-        console.log(response)
-
+        
         if (response.ok) {
           console.log('Article approved successfully');
           // Update the local state to reflect the changes
@@ -60,9 +62,10 @@ const ModeratorArticleTable: React.FC<Props> = ({ articles, visibleColumns }) =>
         } else {
           console.error('Failed to approve the article');
         }
-      } catch (error) {
-        console.error('Error approving article:', error);
       }
+    }
+    catch (error) {
+      console.error('Error approving article:', error);
     }
   };
 
@@ -78,7 +81,7 @@ const ModeratorArticleTable: React.FC<Props> = ({ articles, visibleColumns }) =>
         });
 
         if (response.ok) {
-          console.log(response) 
+          console.log(response)
           console.log('Article deleted successfully');
 
         } else {
@@ -140,7 +143,7 @@ const ModeratorArticleTable: React.FC<Props> = ({ articles, visibleColumns }) =>
             <p><strong>Details:</strong> {currentArticle.details}</p>
 
             <p>Do you want to approve this article?</p>
-            <button onClick={approveArticle}>Yes</button>
+            <button onClick={() => approveArticle(currentArticle.id)}>Yes</button>
             <button onClick={() => setIsModalOpen(false)}>No</button>
           </div>
         </div>

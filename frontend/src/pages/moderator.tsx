@@ -31,13 +31,9 @@ interface Article {
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [allArticles, setAllArticles] = useState<Article[]>([]);
-
-
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
-
   const [displayArticles, setDisplayArticles] = useState<Article[]>([]);
   const [showDuplicates, setShowDuplicates] = useState(false);
-  const [showUnchecked, setShowUnchecked] = useState(true);
+  const [showUnchecked, setShowUnchecked] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState([
     "title",
     "author",
@@ -75,25 +71,6 @@ export default function Home() {
   useEffect(() => {
     fetchArticlesFromServer();
   }, []);
-
-
-  // UPDATE DISPLAY ARTICLES BASED ON OPTIONS
-  useEffect(() => {
-    let filtered = allArticles;
-
-    if (showUnchecked) {
-      filtered = allArticles.filter((article) => !article.checked);
-    } else if (searchTerm) {
-      filtered = allArticles.filter(
-        (article) =>
-          article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          article.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          article.claim.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    setDisplayArticles(filtered);
-  }, [searchTerm]);
 
   // Update displayArticles based on search, show duplicates, and show unchecked options
   useEffect(() => {

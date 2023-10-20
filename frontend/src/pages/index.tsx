@@ -25,6 +25,7 @@ interface Article {
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [articles, setArticles] = useState<Article[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [visibleColumns, setVisibleColumns] = useState([
     "title",
     "author",
@@ -75,6 +76,7 @@ export default function Home() {
           article.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
           article.claim.toLowerCase().includes(searchTerm.toLowerCase())
       );
+      setFilteredArticles(filtered);
   }, [searchTerm, articles]);
 
   return (
@@ -99,7 +101,7 @@ export default function Home() {
         setVisibleColumns={setVisibleColumns}
       />
       <div className={styles.tableContainer}>
-        <ArticleTable articles={articles} visibleColumns={visibleColumns} />
+        <ArticleTable articles={filteredArticles} visibleColumns={visibleColumns} />
       </div>
 
 

@@ -58,17 +58,17 @@ router.delete('/bytitle/:title', async (req, res) => {
 // @route   PUT api/articles/approve/:id
 // @desc    Approve an article by id
 // @access  Public
-router.put('/:id', async (req, res) => {
+router.put('/approve/:id', async (req, res) => {
+
+
   const articleId = req.params.id;
-  console.log('articleId attempting to approve:', articleId)
+  console.log('articleId attempting to approve:', articleId);
 
-  const temp = await Article.findByIdAndUpdate(articleId, { approved: true, checked: true })
-    .then(article => res.json({ msg: 'Article approved successfully' }))
-    .catch(err => res.status(400).json({ error: 'Unable to approve the article' }));
-
-    console.log('temp:', temp)
+  // If the article exists, update its approval status
+  await Article.findByIdAndUpdate(articleId, { approved: true, checked: true }, { new: true },)
+    .then(() => res.json({ msg: 'Article approved successfully' }))
+    .catch(() => res.status(400).json({ error: 'Unable to approve the article' }));
 });
-
 
 
 module.exports = router;
