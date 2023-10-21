@@ -1,26 +1,40 @@
-import { useState, useEffect } from "react";
-
+// moderator.tsx
+import { useState, useEffect, SetStateAction } from "react";
 import Navbar from "../components/navbar";
-import testData from "./testData.json";
 import ArticleTable from "../components/articletable";
 import SearchBar from "../components/searchbar";
 import ShowUncheckedCheckbox from "../components/showunchecked";
-import UncheckedArticlesTable from "../components/uncheckedarticletable";
+import ModeratorArticleTable from "../components/moderatorarticletable";
 import FilterDuplicatesCheckbox from "../components/duplicatescheck";
 import ColumnVisibilityToggle from "../components/columntoggle";
 
 import styles from "../styles/moderator.module.css";
 
+// Define the type or interface for your articles
+interface Article {
+  id: string;
+  title: string;
+  author: string;
+  date: string;
+  se_practice: string;
+  claim: string;
+  result_of_evidence: string;
+  type_of_research: string;
+  approved: boolean;
+  checked: boolean;
+  details: string;
+  grade: string;
+}
+
+
+
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [showUnchecked, setShowUnchecked] = useState(false);
-  const [filteredArticles, setFilteredArticles] = useState(testData);
-  const [uncheckedArticles, setUncheckedArticles] = useState(
-    testData.filter((article) => !article.approved)
-  );
+  const [allArticles, setAllArticles] = useState<Article[]>([]);
+  const [displayArticles, setDisplayArticles] = useState<Article[]>([]);
   const [showDuplicates, setShowDuplicates] = useState(false);
-
-  const [visibleColumns, setVisibleColumns] = useState<string[]>([
+  const [showUnchecked, setShowUnchecked] = useState(false);
+  const [visibleColumns, setVisibleColumns] = useState([
     "title",
     "author",
     "date",
@@ -30,53 +44,61 @@ export default function Home() {
     "type_of_research",
     "approved",
     "checked",
+    "grade",
   ]);
 
-  const [visibleColumnsUnchecked, setVisibleColumnsUnchecked] = useState<string[]>([
-    "title",
-    "author",
-    "date",
-    "se_practice",
-    "claim",
-    "result_of_evidence",
-    "type_of_research",
-    "approved",
-    "checked",
-  ]);
 
+  const dotenv = require("dotenv")
+  dotenv.config()
+  const backendURL = process.env.NEXT_PUBLIC_BACKENDURL;
+  const fetchArticlesFromServer = async () => {
+    try {
+      const response = await fetch(`${backendURL}/api/articles`);
+      if (response.ok) {
+        const data = await response.json();
+        setAllArticles(data);
+        setDisplayArticles(data);
+        console.log("Articles fetched successfully");
+      } else {
+        console.error('Failed to fetch articles');
+      }
+    } catch (error) {
+      console.error('Error fetching articles:', error);
+    }
+  };
+
+  // Runs once on component mount
   useEffect(() => {
-    let filtered = testData;
+    fetchArticlesFromServer();
+  }, []);
+
+  // Update displayArticles based on search, show duplicates, and show unchecked options
+  useEffect(() => {
+    let filtered = allArticles;
 
     if (showUnchecked) {
-      filtered = testData.filter((article) => !article.checked);
+      filtered = allArticles.filter((article) => !article.checked);
     } else if (searchTerm) {
-      filtered = testData.filter(
+      filtered = allArticles.filter(
         (article) =>
           article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           article.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
           article.claim.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    }
-
-    setFilteredArticles(filtered);
-  }, [searchTerm, showUnchecked]);
-
-  useEffect(() => {
-    let unchecked = testData.filter((article) => !article.approved);
-
-    if (showDuplicates) {
+    } else if (showDuplicates) {
       const approvedTitles = new Set(
-        testData
+        allArticles
           .filter((article) => article.approved)
           .map((article) => article.title.toLowerCase())
       );
-      unchecked = unchecked.filter((article) =>
+      filtered = filtered.filter((article) =>
         approvedTitles.has(article.title.toLowerCase())
       );
     }
 
-    setUncheckedArticles(unchecked);
-  }, [showDuplicates]);
+    setDisplayArticles(filtered);
+  }, [searchTerm, showDuplicates, showUnchecked]);
+
 
   return (
     <div>
@@ -86,10 +108,10 @@ export default function Home() {
       <hr />
 
       <SearchBar onSearch={setSearchTerm} />
-      <ShowUncheckedCheckbox onChange={setShowUnchecked} />
-      
 
-      <h2 style={{ textAlign: "center" }}>Articles</h2>
+
+      <h2 style={{ textAlign: "center" }}>All Articles</h2>
+
       <ColumnVisibilityToggle
         columns={[
           "title",
@@ -105,40 +127,26 @@ export default function Home() {
         visibleColumns={visibleColumns}
         setVisibleColumns={setVisibleColumns}
       />
-      <div className={styles.tableContainer}>
-        <ArticleTable
-          articles={filteredArticles}
-          visibleColumns={visibleColumns}
-        />
-      </div>
-
-      <hr />
-
-      <h2 style={{ textAlign: "center" }}>Unchecked Articles</h2>
-      
-      <ColumnVisibilityToggle
-        columns={[
-          "title",
-          "author",
-          "date",
-          "se_practice",
-          "claim",
-          "result_of_evidence",
-          "type_of_research",
-          "approved",
-          "checked",
-        ]}
-        visibleColumns={visibleColumnsUnchecked}
-        setVisibleColumns={setVisibleColumnsUnchecked}
-      />
       <FilterDuplicatesCheckbox
         showDuplicates={showDuplicates}
         setShowDuplicates={setShowDuplicates}
       />
-      <UncheckedArticlesTable 
-          articles={uncheckedArticles} 
-          visibleColumns={visibleColumnsUnchecked}
+      <ShowUncheckedCheckbox onChange={setShowUnchecked} />
+      <ModeratorArticleTable
+        articles={displayArticles}
+        visibleColumns={visibleColumns}
       />
+
+
+      <div className={styles.tableContainer}>
+        {displayArticles.length === 0 ? (
+          <p>No articles to display</p>
+        ) : (
+          <p></p>
+        )}
+      </div>
+
+      <hr />
     </div>
   );
 }

@@ -1,28 +1,33 @@
-// app.js
-
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 
 // routes
 const books = require('./routes/api/books.js');
+const submit = require('./routes/api/submit.js');
+const articles = require('./routes/api/articles.js');
 
 const app = express();
 
 // Connect Database
 connectDB();
 
-// cors
+// Enable CORS
 app.use(cors({ origin: true, credentials: true }));
 
-// Init Middleware
-app.use(express.json({ extended: false }));
+// Middleware to parse JSON data
+app.use(express.json());
 
-app.get('/', (req, res) => res.send('Hello world!'));
+// Root route
+app.get('/', (req, res) => {
+  res.send('Hello world!');
+});
 
-// use Routes
+// Use Routes
 app.use('/api/books', books);
+app.use('/api/submit', submit);
+app.use('/api/articles', articles);
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`Server runniggggng on port ${port}`));
