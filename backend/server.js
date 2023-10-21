@@ -28,5 +28,5 @@ app.use('/api/articles', require('./routes/api/articles'));
 const PORT = process.env.PORT || 8082;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${8082}`);
+  console.log(`Server is running on port ${PORT}`);
 });
