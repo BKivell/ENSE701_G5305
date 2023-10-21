@@ -49,4 +49,4 @@ const articleSchema = new mongoose.Schema({
 // Create a model based on the schema
 const Article = mongoose.model('Article', articleSchema);
 
-module.exports = Article;
+module.exports = Article; 
