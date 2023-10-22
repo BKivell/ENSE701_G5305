@@ -266,6 +266,21 @@ function updateApproval(checkbox) {
 }
 ////////////////////////////////////////////////////////////
 
+document.getElementById('sendEmailButton').addEventListener('click', function() {
+    axios.post('/api/send-email', {
+      to: 'recipient-email@example.com',
+      subject: 'Email Subject',
+      text: 'Email Content',
+    })
+    .then(response => {
+      console.log('Email sent successfully:', response.data);
+    })
+    .catch(error => {
+      console.error('Error sending email:', error);
+    });
+  });
+  
+
 
 
 
