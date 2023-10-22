@@ -43,7 +43,9 @@ function populateTable(data) {
             <td class="yearCol">${row.year}</td>
             <td class="claimCol">${row.claim}</td>
             <td class="evidenceCol">${row.evidence}</td>
-            <td class="approval">${row.isApproved}</td>
+            <td class="approval">
+                <input type="checkbox" data-id="${row.id}" onchange="updateApproval(this)">
+            </td>
             <td class="detailsCol"><button onclick="location.href='detail.html?id=${row._id}'">Edit</button></td>
         `;
         tbody.appendChild(tr);
